@@ -1,68 +1,31 @@
 ﻿using System;
-using System.Collections;
 
 namespace InheritanceApp
 {
-    class CollectionProgram
+    /**
+     * @brief Главный класс программы
+     * @details Демонстрирует работу классов Flight, FlightWithBedding и Route.
+     * Показывает ввод данных, вывод информации и расчет доходов.
+     */
+    class Program
     {
+        /**
+         * @brief Точка входа в программу
+         * @details Создает объекты рейсов и маршрута,
+         * запрашивает ввод данных, выводит результаты расчетов.
+         */
         static void Main()
         {
-            ArrayList flights = new ArrayList();
-            Random rnd = new Random();
+            Route route = new Route();
+            route.Read();
+            route.Display();
+            Console.WriteLine($"Суммарный доход: {route.TotalRevenue()} руб");
 
-            for (int i = 0; i < 15; i++)
-            {
-                int type = rnd.Next(2); 
-
-                if (type == 0)
-                {
-                    double price = rnd.Next(1000, 10000);
-                    int cap = rnd.Next(50, 300);
-
-                    flights.Add(new Flight(price, cap));
-                }
-                else
-                {
-                    double price = rnd.Next(1000, 10000);
-                    int cap = rnd.Next(50, 300);
-                    int percent = rnd.Next(0, 101);
-
-                    flights.Add(new FlightWithBedding(price, cap, percent));
-                }
-            }
-
-            int countFlight = 0;
-            int countBedding = 0;
-
-            double sumFlight = 0;
-            double sumBedding = 0;
-
-            Console.WriteLine("=== Коллекция объектов ===");
-
-            foreach (object obj in flights)
-            {
-                Flight f = (Flight)obj;
-                f.Display();
-                Console.WriteLine();
-
-                string typeName = obj.GetType().Name;
-                double revenue = f.ExpectedRevenue(); 
-
-                if (typeName == "Flight")
-                {
-                    countFlight++;
-                    sumFlight += revenue;
-                }
-                else
-                {
-                    countBedding++;
-                    sumBedding += revenue;
-                }
-            }
-
-            Console.WriteLine("=== Итоги ===");
-            Console.WriteLine($"Обычные рейсы: {countFlight}, сумма доходов = {sumFlight:F2}");
-            Console.WriteLine($"Рейсы с постелью: {countBedding}, сумма доходов = {sumBedding:F2}");
+            Console.WriteLine("\n--- Динамический ---");
+            Route dynamic = new Route();
+            dynamic.Read();
+            dynamic.Display();
+            Console.WriteLine($"Суммарный доход: {dynamic.TotalRevenue()} руб");
 
             Console.ReadKey();
         }
